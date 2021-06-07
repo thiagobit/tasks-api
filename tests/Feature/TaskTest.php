@@ -17,7 +17,7 @@ class TaskTest extends TestCase
     {
         Task::factory()->create();
 
-        $this->get(route('v1.users.tasks.index.single'))
+        $this->get(route('v1.users.tasks.index'))
             ->assertUnauthorized();
     }
 
@@ -28,7 +28,7 @@ class TaskTest extends TestCase
 
         $task = Task::factory()->create();
 
-        $this->get(route('v1.users.tasks.index.single'))
+        $this->get(route('v1.users.tasks.index'))
             ->assertSuccessful()
             ->assertSee($task->title);
     }
@@ -40,7 +40,7 @@ class TaskTest extends TestCase
 
         Task::factory()->create(['user_id' => $user->id]);
 
-        $this->get(route('v1.users.tasks.index', $user))
+        $this->get(route('v1.users.tasks.index.single', $user))
             ->assertUnauthorized();
     }
 
@@ -51,7 +51,7 @@ class TaskTest extends TestCase
 
         $task = Task::factory()->create(['user_id' => auth()->id()]);
 
-        $this->get(route('v1.users.tasks.index', auth()->user()))
+        $this->get(route('v1.users.tasks.index.single', auth()->user()))
             ->assertSuccessful()
             ->assertSee($task->title);
     }

@@ -33,8 +33,8 @@ Route::group([
             'middleware' => ['auth:sanctum'],
             'as' => 'tasks.',
         ], function () {
-            Route::get('/tasks', [TaskController::class, 'index'])->name('index.single');
-            Route::get('/{user}/tasks', [TaskController::class, 'index'])->name('index');
+            Route::get('/tasks', [TaskController::class, 'index'])->name('index');
+            Route::get('/{user}/tasks', [TaskController::class, 'index'])->name('index.single');
             Route::post('/{user}/tasks', [TaskController::class, 'store'])->name('store');
             Route::get('/{user}/tasks/{task}', [TaskController::class, 'show'])->name('show');
             Route::put('/{user}/tasks/{task}', [TaskController::class, 'update'])->name('update');
