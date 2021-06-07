@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  php:
+    container_name: tasks-api_php
+    image: php:8-fpm-alpine
+    ports:
+      - "8080:8000"
+    volumes:
+      - .:/var/www/html
+    restart: on-failure
+    links:
+      - mysql
+    command: sh -c "
+      apk update &&
+      apk upgrade &&
+      docker-php-ext-install pdo_mysql &&
+      php artisan key:generate &&
+      php artisan migrate &&
+      php artisan serve --host 0.0.0.0"
+
+  mysql:
+    container_name: tasks-api_mysql
+    image: mysql:8
+    ports:
+      - "33061:3306"
+    volumes:
+      - .data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=tasks-api
+      - MYSQL_USER=tasks-api
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+
+  composer:
+    container_name: tasks-api_composer
+    image: composer
+    volumes:
+      - ./:/app
+    command: install --ignore-platform-reqs
