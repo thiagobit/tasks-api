@@ -4,7 +4,9 @@ A simple API done in Laravel 8 for managing users tasks.
 
 It works with Docker containers and Event dispatchers.
 
-For development purpose, it's using PHP built-in server.
+For development purposes, it's using the PHP built-in server.
+
+The authenticated resources requires a _Bearer Token_ which can be obtained from the login resource.
 
 ## Requirements:
 - [Docker](https://docs.docker.com/engine/install/)
